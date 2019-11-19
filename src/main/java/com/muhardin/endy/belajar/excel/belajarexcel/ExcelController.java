@@ -86,7 +86,7 @@ public class ExcelController {
         font.setFontName("arial");
         CellStyle style = sheet.getWorkbook().createCellStyle();
         style.setFont(font);
-        style.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         Row row1 = sheet.createRow(0);
@@ -122,7 +122,7 @@ public class ExcelController {
         CellStyle styleHeader = sheet.getWorkbook().createCellStyle();
         enableBorder(styleHeader);
         styleHeader.setFont(font);
-        styleHeader.setFillBackgroundColor(IndexedColors.GREEN.getIndex());
+        styleHeader.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
         styleHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         // header
