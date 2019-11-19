@@ -11,7 +11,7 @@
 	<groupId>com.muhardin.endy.belajar.excel</groupId>
 	<artifactId>belajar-excel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>belajar-excel</name>
+	<name>belajar-excel-upload</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

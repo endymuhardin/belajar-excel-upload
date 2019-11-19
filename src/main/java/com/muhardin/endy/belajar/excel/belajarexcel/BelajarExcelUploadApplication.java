@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BelajarExcelApplication {
+public class BelajarExcelUploadApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BelajarExcelApplication.class, args);
+		SpringApplication.run(BelajarExcelUploadApplication.class, args);
 	}
 
 }
