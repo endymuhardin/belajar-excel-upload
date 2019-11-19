@@ -3,6 +3,9 @@ package com.muhardin.endy.belajar.excel.belajarexcel;
 import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,12 +84,14 @@ public class ExcelController {
     }
 
     private void createHeader(Sheet sheet, KelasDto kelas) {
+        XSSFColor orens = new XSSFColor(new byte[]{(byte) 238, (byte) 123, (byte) 29}, null);
+
         Font font = sheet.getWorkbook().createFont();
         font.setBold(true);
         font.setFontName("arial");
-        CellStyle style = sheet.getWorkbook().createCellStyle();
+        XSSFCellStyle style = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
         style.setFont(font);
-        style.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+        style.setFillForegroundColor(orens);
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         Row row1 = sheet.createRow(0);
@@ -112,17 +117,24 @@ public class ExcelController {
 
     private void createDaftarNilai(Sheet sheet, List<MahasiswaDto> daftarMahasiswa) {
 
+        XSSFColor biru = new XSSFColor(new byte[]{(byte) 25, (byte) 65, (byte) 137}, null);
+
+        XSSFFont fontContent = (XSSFFont) sheet.getWorkbook().createFont();
+        fontContent.setFontName("Arial");
+        fontContent.setColor(biru);
         CellStyle styleContent = sheet.getWorkbook().createCellStyle();
         enableBorder(styleContent);
+        styleContent.setFont(fontContent);
 
-        Font font = sheet.getWorkbook().createFont();
-        font.setBold(true);
-        font.setColor(IndexedColors.WHITE.getIndex());
+        Font fontHeader = sheet.getWorkbook().createFont();
+        fontHeader.setFontName("Arial");
+        fontHeader.setBold(true);
+        fontHeader.setColor(IndexedColors.WHITE.getIndex());
 
-        CellStyle styleHeader = sheet.getWorkbook().createCellStyle();
+        XSSFCellStyle styleHeader = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
         enableBorder(styleHeader);
-        styleHeader.setFont(font);
-        styleHeader.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
+        styleHeader.setFont(fontHeader);
+        styleHeader.setFillForegroundColor(biru);
         styleHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         // header
