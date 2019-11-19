@@ -7,7 +7,17 @@
 <body>
     <h1>Form Upload</h1>
 
+    <ul>
+        <li>Kode Matakuliah : <span th:text="${kelas.kodeMatakuliah}">K-001</span></li>
+        <li>Nama Matakuliah : <span th:text="${kelas.namaMatakuliah}">K-001</span></li>
+        <li>Nama Dosen : <span th:text="${kelas.namaDosen}">K-001</span></li>
+        <li>Jumlah Mahasiswa : <span th:text="${kelas.jumlahMahasiswa}">K-001</span></li>
+    </ul>
+
+    <hr />
     <a href="/template-nilai.xlsx">Download Form Penilaian</a>
+
+    <hr />
 
     <form enctype="multipart/form-data" th:action="@{/upload/form}" method="post">
 

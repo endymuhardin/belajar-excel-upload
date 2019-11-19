@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Konfigurasi Kelas</title>
+</head>
+<body>
+    <h1>Konfigurasi Kelas</h1>
+    <form method="post" th:action="@{/}" th:object="${kelas}">
+        <table>
+            <tr>
+                <td>Kode Matakuliah</td>
+                <td>
+                    <input th:field="*{kodeMatakuliah}">
+                    <p th:if="${#fields.hasErrors('kodeMatakuliah')}" th:errors="*{kodeMatakuliah}">Incorrect date</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Nama Matakuliah</td>
+                <td>
+                    <input th:field="*{namaMatakuliah}">
+                    <p th:if="${#fields.hasErrors('namaMatakuliah')}" th:errors="*{namaMatakuliah}">Incorrect date</p>
+                </td>
+            </tr>
+            <tr>
+                <td>Nama Dosen</td>
+                <td>
+                    <input th:field="*{namaDosen}">
+                    <p th:if="${#fields.hasErrors('namaDosen')}" th:errors="*{namaDosen}">Incorrect date</p>
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah Mahasiswa</td>
+                <td>
+                    <input th:field="*{jumlahMahasiswa}">
+                    <p th:if="${#fields.hasErrors('jumlahMahasiswa')}" th:errors="*{jumlahMahasiswa}">Incorrect date</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

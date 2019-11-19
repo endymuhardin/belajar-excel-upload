@@ -7,6 +7,9 @@
 <body>
     <h1>Hasil Penilaian</h1>
 
+    <a th:href="@{/}">Upload Lagi</a>
+
+    <div th:if="${not #lists.isEmpty(daftarNilai)}">
     <table border="1" width="80%" cellpadding="5" cellspacing="5">
         <thead>
         <tr>
@@ -23,6 +26,7 @@
         </tr>
         </tbody>
     </table>
+    </div>
 
 </body>
 </html>
