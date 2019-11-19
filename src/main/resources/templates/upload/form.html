@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Upload</title>
+</head>
+<body>
+    <h1>Form Upload</h1>
+
+    <a href="/template-nilai.xlsx">Download Form Penilaian</a>
+
+    <form enctype="multipart/form-data" th:action="@{/upload/form}" method="post">
+
+        Hasil Penilaian : <input type="file" name="nilai">
+
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hasil Upload</title>
+</head>
+<body>
+    <h1>Hasil Penilaian</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Nilai</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="n : ${daftarNilai}">
+            <td th:text="${n.nim}">NIM</td>
+            <td th:text="${n.nama}">Nama</td>
+            <td th:text="${n.nilai}">Nilai</td>
+        </tr>
+        </tbo/                                                                                                                                           dy>
+    </table>
+
+</body>
+</html>
