@@ -74,7 +74,7 @@ public class ExcelController {
         for (int i = 0; i < jumlah; i++) {
             daftarMahasiswa.add(
                     new MahasiswaDto(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
-                            + String.format("%03d", i), faker.name().fullName()));
+                            + String.format("%03d", i+1), faker.name().fullName()));
         }
 
         return  daftarMahasiswa;
