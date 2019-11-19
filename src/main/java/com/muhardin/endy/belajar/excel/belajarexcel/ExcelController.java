@@ -32,6 +32,9 @@ import java.util.Locale;
 @SessionAttributes("konfigurasiKelas")
 public class ExcelController {
 
+    private static final Integer ROW_START_HEADER = 0;
+    private static final Integer ROW_START_DAFTAR_NILAI = ROW_START_HEADER + 5;
+
     private Faker faker = new Faker(new Locale("id", "id"));
 
     @GetMapping("/")
@@ -84,7 +87,7 @@ public class ExcelController {
     }
 
     private void createHeader(Sheet sheet, KelasDto kelas) {
-        XSSFColor orens = new XSSFColor(new byte[]{(byte) 238, (byte) 123, (byte) 29}, null);
+        XSSFColor orens = new XSSFColor(new byte[]{(byte) 244, (byte) 121, (byte) 32}, null);
 
         Font font = sheet.getWorkbook().createFont();
         font.setBold(true);
@@ -94,15 +97,15 @@ public class ExcelController {
         style.setFillForegroundColor(orens);
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        Row row1 = sheet.createRow(0);
+        Row row1 = sheet.createRow(ROW_START_HEADER);
         row1.createCell(0).setCellValue("Kode Matakuliah");
         row1.createCell(1).setCellValue(kelas.getKodeMatakuliah());
 
-        Row row2 = sheet.createRow(1);
+        Row row2 = sheet.createRow(ROW_START_HEADER + 1);
         row2.createCell(0).setCellValue("Nama Matakuliah");
         row2.createCell(1).setCellValue(kelas.getNamaMatakuliah());
 
-        Row row3 = sheet.createRow(2);
+        Row row3 = sheet.createRow(ROW_START_HEADER + 2);
         row3.createCell(0).setCellValue("Nama Dosen");
         row3.createCell(1).setCellValue(kelas.getNamaDosen());
 
@@ -117,7 +120,7 @@ public class ExcelController {
 
     private void createDaftarNilai(Sheet sheet, List<MahasiswaDto> daftarMahasiswa) {
 
-        XSSFColor biru = new XSSFColor(new byte[]{(byte) 25, (byte) 65, (byte) 137}, null);
+        XSSFColor biru = new XSSFColor(new byte[]{(byte) 2, (byte) 62, (byte) 136}, null);
 
         XSSFFont fontContent = (XSSFFont) sheet.getWorkbook().createFont();
         fontContent.setFontName("Arial");
@@ -138,7 +141,7 @@ public class ExcelController {
         styleHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         // header
-        Row hdr = sheet.createRow(5);
+        Row hdr = sheet.createRow(ROW_START_DAFTAR_NILAI);
         hdr.createCell(0).setCellValue("NIM");
         hdr.createCell(1).setCellValue("Nama Mahasiswa");
         hdr.createCell(2).setCellValue("Nilai");
@@ -148,7 +151,7 @@ public class ExcelController {
         hdr.getCell(2).setCellStyle(styleHeader);
 
         // data mahasiswa
-        int baris = 5;
+        int baris = ROW_START_DAFTAR_NILAI;
         for (MahasiswaDto m : daftarMahasiswa) {
             baris++;
 
@@ -183,7 +186,7 @@ public class ExcelController {
         try {
             Workbook workbook = new XSSFWorkbook(fileNilai.getInputStream());
             Sheet sheetPertama = workbook.getSheetAt(0);
-            int rowPertama = 6;
+            int rowPertama = ROW_START_DAFTAR_NILAI + 1;
             int jumlahMahasiswa = kelas.getJumlahMahasiswa();
             for (int i = 0; i < jumlahMahasiswa; i++) {
                 Row baris = sheetPertama.getRow(rowPertama + i);
