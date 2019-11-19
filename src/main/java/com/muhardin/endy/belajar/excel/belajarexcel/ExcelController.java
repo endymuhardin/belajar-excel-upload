@@ -81,11 +81,13 @@ public class ExcelController {
     }
 
     private void createHeader(Sheet sheet, KelasDto kelas) {
-        CellStyle style = sheet.getWorkbook().createCellStyle();
         Font font = sheet.getWorkbook().createFont();
         font.setBold(true);
         font.setFontName("arial");
+        CellStyle style = sheet.getWorkbook().createCellStyle();
         style.setFont(font);
+        style.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         Row row1 = sheet.createRow(0);
         row1.createCell(0).setCellValue("Kode Matakuliah");
@@ -109,18 +111,19 @@ public class ExcelController {
     }
 
     private void createDaftarNilai(Sheet sheet, List<MahasiswaDto> daftarMahasiswa) {
-        CellStyle styleContent = sheet.getWorkbook().createCellStyle();
-        styleContent.setBorderBottom(BorderStyle.THIN);
-        styleContent.setBorderLeft(BorderStyle.THIN);
-        styleContent.setBorderRight(BorderStyle.THIN);
-        styleContent.setBorderTop(BorderStyle.THIN);
 
-        CellStyle styleHeader = sheet.getWorkbook().createCellStyle();
-        styleHeader.cloneStyleFrom(styleContent);
+        CellStyle styleContent = sheet.getWorkbook().createCellStyle();
+        enableBorder(styleContent);
 
         Font font = sheet.getWorkbook().createFont();
         font.setBold(true);
+        font.setColor(IndexedColors.WHITE.getIndex());
+
+        CellStyle styleHeader = sheet.getWorkbook().createCellStyle();
+        enableBorder(styleHeader);
         styleHeader.setFont(font);
+        styleHeader.setFillBackgroundColor(IndexedColors.GREEN.getIndex());
+        styleHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         // header
         Row hdr = sheet.createRow(5);
@@ -145,6 +148,13 @@ public class ExcelController {
             mhs.getCell(1).setCellStyle(styleContent);
             mhs.createCell(2).setCellStyle(styleContent);
         }
+    }
+
+    private void enableBorder(CellStyle cellStyle) {
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setBorderLeft(BorderStyle.THIN);
+        cellStyle.setBorderRight(BorderStyle.THIN);
+        cellStyle.setBorderTop(BorderStyle.THIN);
     }
 
     @PostMapping("/upload/form")
