@@ -3,10 +3,14 @@ package com.muhardin.endy.belajar.excel.belajarexcel;
 import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -35,6 +39,9 @@ public class ExcelController {
     private static final Integer ROW_START_HEADER = 0;
     private static final Integer ROW_START_DAFTAR_NILAI = ROW_START_HEADER + 5;
 
+    @Value("classpath:logo.png")
+    private Resource logo;
+
     private Faker faker = new Faker(new Locale("id", "id"));
 
     @GetMapping("/")
@@ -62,9 +69,11 @@ public class ExcelController {
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Nilai UTS");
 
-        sheet.setColumnWidth(0, 6000);
+        sheet.setColumnWidth(0, 5000);
         sheet.setColumnWidth(1, 15000);
+        sheet.setColumnWidth(2, 5000);
 
+        pasangLogo(wb, sheet);
         createHeader(sheet, kelas);
 
         List<MahasiswaDto> daftarMahasiswa = generateDaftarMahasiswa(kelas.getJumlahMahasiswa());
@@ -73,6 +82,29 @@ public class ExcelController {
         response.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment;filename=nilai-uts.xlsx");
         wb.write(response.getOutputStream());
+    }
+
+    private void pasangLogo(Workbook wb, Sheet sheet) throws IOException {
+        sheet.addMergedRegion(new CellRangeAddress(
+                0,
+                2,
+                0,
+                0
+        ));
+
+        byte[] baLogo = IOUtils.toByteArray(logo.getInputStream());
+        int pictureIdx = wb.addPicture(baLogo, Workbook.PICTURE_TYPE_PNG);
+        logo.getInputStream().close();
+
+        CreationHelper helper = wb.getCreationHelper();
+        Drawing drawing = sheet.createDrawingPatriarch();
+        ClientAnchor anchor = helper.createClientAnchor();
+        anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
+        anchor.setCol1(0);
+        anchor.setCol2(1);
+        anchor.setRow1(0);
+        anchor.setRow2(3);
+        drawing.createPicture(anchor, pictureIdx);
     }
 
     private List<MahasiswaDto> generateDaftarMahasiswa(Integer jumlah) {
@@ -96,25 +128,30 @@ public class ExcelController {
         style.setFont(font);
         style.setFillForegroundColor(orens);
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        enableBorder(style);
 
         Row row1 = sheet.createRow(ROW_START_HEADER);
-        row1.createCell(0).setCellValue("Kode Matakuliah");
-        row1.createCell(1).setCellValue(kelas.getKodeMatakuliah());
+        row1.setHeightInPoints(30);
+        row1.createCell(1).setCellValue("Kode Matakuliah");
+        row1.createCell(2).setCellValue(kelas.getKodeMatakuliah());
 
         Row row2 = sheet.createRow(ROW_START_HEADER + 1);
-        row2.createCell(0).setCellValue("Nama Matakuliah");
-        row2.createCell(1).setCellValue(kelas.getNamaMatakuliah());
+        row2.setHeightInPoints(30);
+        row2.createCell(1).setCellValue("Nama Matakuliah");
+        row2.createCell(2).setCellValue(kelas.getNamaMatakuliah());
 
         Row row3 = sheet.createRow(ROW_START_HEADER + 2);
-        row3.createCell(0).setCellValue("Nama Dosen");
-        row3.createCell(1).setCellValue(kelas.getNamaDosen());
+        row3.setHeightInPoints(30);
+        row3.createCell(1).setCellValue("Nama Dosen");
+        row3.createCell(2).setCellValue(kelas.getNamaDosen());
 
-        row1.getCell(0).setCellStyle(style);
         row1.getCell(1).setCellStyle(style);
-        row2.getCell(0).setCellStyle(style);
+        row1.getCell(2).setCellStyle(style);
         row2.getCell(1).setCellStyle(style);
-        row3.getCell(0).setCellStyle(style);
+        row2.getCell(2).setCellStyle(style);
         row3.getCell(1).setCellStyle(style);
+        row3.getCell(2).setCellStyle(style);
 
     }
 
